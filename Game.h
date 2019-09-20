@@ -67,5 +67,8 @@ protected:
 	void processGameEvents(sf::Event&);
 
 	// main window
+	sf::Sprite m_player;
 	sf::RenderWindow m_window;
+	sf::Texture m_playerTexture;
+	float m_turn = 360;
 };

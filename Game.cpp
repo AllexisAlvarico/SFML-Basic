@@ -27,6 +27,15 @@ Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default)
 {
 	m_window.setVerticalSyncEnabled(true);
+
+
+	if (!m_playerTexture.loadFromFile("E-100.png"))
+	{
+		//error
+	}
+	m_player.setTexture(m_playerTexture);
+	m_player.setOrigin(103,48);
+	m_player.setPosition(720, 450);
 }
 
 ////////////////////////////////////////////////////////////
@@ -79,9 +88,14 @@ void Game::processGameEvents(sf::Event& event)
 		case sf::Keyboard::Escape:
 			m_window.close();
 			break;
-		case sf::Keyboard::Up:
+		case sf::Keyboard::Right:
+			m_turn++;
+			m_player.setRotation(m_turn);
 			// Up key was pressed...
 			break;
+		case sf::Keyboard::Left:
+			m_turn--;
+			m_player.setRotation(m_turn);
 		default:
 			break;
 		}
@@ -92,13 +106,15 @@ void Game::processGameEvents(sf::Event& event)
 void Game::update(double dt)
 {
 
+
+
 }
 
 ////////////////////////////////////////////////////////////
 void Game::render()
 {
 	m_window.clear(sf::Color(0, 0, 0, 0));
-
+	m_window.draw(m_player); 
 	m_window.display();
 }
 

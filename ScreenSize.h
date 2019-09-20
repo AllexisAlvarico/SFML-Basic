@@ -7,3 +7,4 @@ public:
 
 	static const int s_height{ 1440 };
 };
+	

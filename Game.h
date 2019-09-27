@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "ScreenSize.h"
+#include "LevelLoader.h"
 
 /// <summary>
 /// @author RP
@@ -27,6 +28,8 @@ public:
 	///   and sets vertical sync enabled. 
 	/// </summary>
 	Game();
+
+
 
 	/// <summary>
 	/// @brief the main game loop.
@@ -67,8 +70,15 @@ protected:
 	void processGameEvents(sf::Event&);
 
 	// main window
-	sf::Sprite m_player;
 	sf::RenderWindow m_window;
-	sf::Texture m_playerTexture;
+	sf::Sprite m_player;
+	sf::Sprite m_bgSprite;
+	sf::Texture m_bgTexture;
+	sf::Texture m_playerTexture;	
 	float m_turn = 360;
+
+	LevelData m_level;
+
+	std::vector<sf::Sprite> m_sprites;
+	sf::Texture m_spriteSheetTexture;
 };

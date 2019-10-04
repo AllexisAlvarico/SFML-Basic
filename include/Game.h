@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "ScreenSize.h"
 #include "LevelLoader.h"
+#include "Tank.h"
 
 /// <summary>
 /// @author RP
@@ -78,6 +79,7 @@ protected:
 	float m_turn = 360;
 
 	LevelData m_level;
+	Tank m_tank;
 
 	std::vector<sf::Sprite> m_sprites;
 	sf::Texture m_spriteSheetTexture;

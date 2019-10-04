@@ -24,7 +24,8 @@ static double const MS_PER_UPDATE = 10.0;
 
 ////////////////////////////////////////////////////////////
 Game::Game()
-	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default)
+	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
+	m_tank(m_spriteSheetTexture,m_level.m_tank.m_position)
 {
 	m_window.setVerticalSyncEnabled(true);
 
@@ -43,7 +44,7 @@ Game::Game()
 		throw e;
 	}
 
-	if (!m_playerTexture.loadFromFile("E-100.png"))
+	if (!m_playerTexture.loadFromFile("resources\\images\\E-100.png"))
 	{
 		//error
 	}
@@ -51,18 +52,19 @@ Game::Game()
 	m_player.setOrigin(103,48);
 	m_player.setPosition(m_level.m_tank.m_position);
 
-	if (!m_bgTexture.loadFromFile("Background.jpg"))
+	if (!m_bgTexture.loadFromFile("resources\\images\\Background.jpg"))
 	{
 		//error
 	}
 	m_bgSprite.setTexture(m_bgTexture);
 
-	if (!m_spriteSheetTexture.loadFromFile("SpriteSheet.png"))
+	if (!m_spriteSheetTexture.loadFromFile("resources\\images\\SpriteSheet.png"))
 	{
 
 		std::string errorMsg("Error loading texture");
 		throw std::exception(errorMsg.c_str());
 	}
+
 
 	// Extract the wall image from the spritesheet.
 	sf::Sprite sprite;
@@ -115,6 +117,26 @@ void Game::processEvents()
 			m_window.close();
 		}
 		processGameEvents(event);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			m_tank.increaseSpeed();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			m_tank.decreaseSpeed();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			m_tank.increaseRotation();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			m_tank.increaseRotation();
+		}
 	}
 }
 
@@ -163,8 +185,8 @@ void Game::render()
 		m_window.draw(m_sprites.at(i));
 		i++;
 	}
-	m_window.draw(m_player);
-
+	//m_window.draw(m_player);
+	m_tank.render(m_window);
 	m_window.display();
 }
 

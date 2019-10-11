@@ -8,12 +8,14 @@ Tank::Tank(sf::Texture const & texture, sf::Vector2f const & pos)
 
 void Tank::update(double dt)
 {	
+	handleKeyInput();
 	m_tankBase.setPosition(m_tankBase.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt/ 1000), m_tankBase.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000));
 	m_turret.setPosition(m_tankBase.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000), m_tankBase.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000));
 	m_tankBase.setRotation(m_rotation);
-	m_turret.setRotation(m_rotation);
+	m_turret.setRotation(m_turretRotation);
 	m_speed *= 0.99;
 	m_speed = std::clamp(m_speed, M_MIN, M_MAX);
+
 }
 
 void Tank::render(sf::RenderWindow & window) 
@@ -56,6 +58,76 @@ void Tank::decreaseRotation()
 		m_rotation = 359.0;
 	}
 
+}
+
+void Tank::handleKeyInput()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		decreaseRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		increaseRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		increaseSpeed();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		decreaseSpeed();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+	{
+		increaseTurretRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+	{
+		decreaseTurretRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+	{
+		centreTurret();
+	}
+
+
+}
+
+void Tank::increaseTurretRotation()
+{
+	m_turretRotation += 0.5;
+	if (m_turretRotation == 360.0)
+	{
+		m_turretRotation = 0;
+	}
+}
+
+void Tank::decreaseTurretRotation()
+{
+	m_turretRotation -= 0.5;
+	if (m_turretRotation == 0.0)
+	{
+		m_turretRotation = 359.0;
+	}
+}
+
+void Tank::centreTurret()
+{
+	if (m_turretRotation <= m_rotation)
+	{
+		m_turretRotation += 1;
+	}
+	else if (m_turretRotation >= m_rotation)
+	{
+		m_turretRotation -= 1;
+	}
+	else
+	{
+		m_turretRotation = 0;
+	}
+
+	
 }
 
 

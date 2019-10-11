@@ -17,6 +17,10 @@ public:
 	void decreaseSpeed();
 	void increaseRotation();
 	void decreaseRotation();
+	void handleKeyInput();
+	void increaseTurretRotation();
+	void decreaseTurretRotation();
+	void centreTurret();
 	
 private:
 	void initSprites(sf::Vector2f const & pos);
@@ -25,8 +29,8 @@ private:
 	sf::Texture const & m_texture;
 	double m_speed{ 0.0 };
 	double m_rotation{ 0.0 };
+	double m_turretRotation{ 0.0 };
 	double M_MAX{ 100.0 };
 	double M_MIN{ -100.0 };
-	double m_friction{ 5.0 };
 		
 };

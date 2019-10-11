@@ -44,12 +44,13 @@ Game::Game()
 		throw e;
 	}
 
+	
 	if (!m_playerTexture.loadFromFile("resources\\images\\E-100.png"))
 	{
 		//error
 	}
-	m_player.setTexture(m_playerTexture);
-	m_player.setOrigin(103,48);
+	//m_player.setTexture(m_playerTexture);
+	//m_player.setOrigin(103,48);
 	m_player.setPosition(m_level.m_tank.m_position);
 
 	if (!m_bgTexture.loadFromFile("resources\\images\\Background.jpg"))
@@ -117,26 +118,6 @@ void Game::processEvents()
 			m_window.close();
 		}
 		processGameEvents(event);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		{
-			m_tank.increaseSpeed();
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		{
-			m_tank.decreaseSpeed();
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{
-			m_tank.increaseRotation();
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			m_tank.increaseRotation();
-		}
 	}
 }
 
@@ -151,14 +132,18 @@ void Game::processGameEvents(sf::Event& event)
 		case sf::Keyboard::Escape:
 			m_window.close();
 			break;
-		//case sf::Keyboard::Right:
-		//	m_turn++;
-		//	m_player.setRotation(m_turn);
-		//	// Up key was pressed...
-		//	break;
-		//case sf::Keyboard::Left:
-		//	m_turn--;
-		//	m_player.setRotation(m_turn);
+		case sf::Keyboard::Left:
+			m_tank.decreaseRotation();
+			break;
+		case sf::Keyboard::Right:
+			m_tank.increaseRotation();
+			break;
+		case sf::Keyboard::Up:
+			m_tank.increaseSpeed();
+			break;
+		case sf::Keyboard::Down:
+			m_tank.decreaseSpeed();
+			break;
 		default:
 			break;
 		}
@@ -169,8 +154,24 @@ void Game::processGameEvents(sf::Event& event)
 void Game::update(double dt)
 {
 
+	m_tank.update(dt);
 
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		m_tank.decreaseRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		m_tank.increaseRotation();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		m_tank.increaseSpeed();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		m_tank.decreaseSpeed();
+	}
 }
 
 ////////////////////////////////////////////////////////////

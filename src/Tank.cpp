@@ -8,8 +8,12 @@ Tank::Tank(sf::Texture const & texture, sf::Vector2f const & pos)
 
 void Tank::update(double dt)
 {	
-
-	m_tankBase.setPosition(m_tankBase.getPosition().x + cos(m_rotation) * m_speed * (dt/ 1000), m_tankBase.getPosition().y + sin(m_rotation) * m_speed * (dt / 1000));
+	m_tankBase.setPosition(m_tankBase.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt/ 1000), m_tankBase.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000));
+	m_turret.setPosition(m_tankBase.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000), m_tankBase.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000));
+	m_tankBase.setRotation(m_rotation);
+	m_turret.setRotation(m_rotation);
+	m_speed *= 0.99;
+	m_speed = std::clamp(m_speed, M_MIN, M_MAX);
 }
 
 void Tank::render(sf::RenderWindow & window) 
@@ -20,7 +24,7 @@ void Tank::render(sf::RenderWindow & window)
 
 void Tank::increaseSpeed()
 {
-	if (m_speed < 100.0)
+	if (m_speed < M_MAX)
 	{
 		m_speed += 1;
 	}
@@ -28,7 +32,7 @@ void Tank::increaseSpeed()
 
 void Tank::decreaseSpeed()
 {
-	if (m_speed > -100.0)
+	if (m_speed > M_MIN)
 	{
 		m_speed -= 1;
 	}
@@ -36,20 +40,22 @@ void Tank::decreaseSpeed()
 
 void Tank::increaseRotation()
 {
-	m_rotation += 1;
+	m_rotation += 0.5;
 	if (m_rotation == 360.0)
 	{
 		m_rotation = 0;
 	}
+
 }
 
 void Tank::decreaseRotation()
 {
-	m_rotation -= 1;
+	m_rotation -= 0.5;
 	if (m_rotation == 0.0)
 	{
 		m_rotation = 359.0;
 	}
+
 }
 
 

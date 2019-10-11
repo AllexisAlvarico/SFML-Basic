@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "MathUtility.h"
 
 /// <summary>
 /// @brief A simple tank controller.
@@ -24,5 +25,8 @@ private:
 	sf::Texture const & m_texture;
 	double m_speed{ 0.0 };
 	double m_rotation{ 0.0 };
+	double M_MAX{ 100.0 };
+	double M_MIN{ -100.0 };
+	double m_friction{ 5.0 };
 		
 };

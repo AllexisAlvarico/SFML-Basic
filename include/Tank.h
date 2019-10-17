@@ -32,5 +32,6 @@ private:
 	double m_turretRotation{ 0.0 };
 	double M_MAX{ 100.0 };
 	double M_MIN{ -100.0 };
+	bool m_central;
 		
 };

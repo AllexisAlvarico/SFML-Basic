@@ -16,6 +16,8 @@ void Tank::update(double dt)
 	m_speed *= 0.99;
 	m_speed = std::clamp(m_speed, M_MIN, M_MAX);
 
+
+
 }
 
 void Tank::render(sf::RenderWindow & window) 
@@ -88,9 +90,13 @@ void Tank::handleKeyInput()
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 	{
-		centreTurret();
+		m_central = true;
 	}
 
+	if (m_central)
+	{
+		centreTurret();
+	}
 
 }
 
@@ -114,17 +120,18 @@ void Tank::decreaseTurretRotation()
 
 void Tank::centreTurret()
 {
-	if (m_turretRotation <= m_rotation)
+	if (m_turretRotation < m_rotation)
 	{
 		m_turretRotation += 1;
 	}
-	else if (m_turretRotation >= m_rotation)
+	else if (m_turretRotation > m_rotation)
 	{
 		m_turretRotation -= 1;
 	}
 	else
 	{
-		m_turretRotation = 0;
+		//m_turretRotation += 0;
+		m_central = false;
 	}
 
 	

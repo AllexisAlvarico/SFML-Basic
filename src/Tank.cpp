@@ -1,6 +1,6 @@
 #include "Tank.h"
 
-Tank::Tank(sf::Texture const & texture, sf::Vector2f const & pos)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites)
 : m_texture(texture)
 {
 	initSprites(pos);
@@ -28,18 +28,12 @@ void Tank::render(sf::RenderWindow & window)
 
 void Tank::increaseSpeed()
 {
-	if (m_speed < M_MAX)
-	{
-		m_speed += 1;
-	}
+	m_speed += 1;
 }
 
 void Tank::decreaseSpeed()
 {
-	if (m_speed > M_MIN)
-	{
-		m_speed -= 1;
-	}
+	m_speed -= 1;
 }
 
 void Tank::increaseRotation()

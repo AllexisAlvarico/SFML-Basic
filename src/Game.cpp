@@ -77,9 +77,11 @@ Game::Game()
 	{
 		// Position the wall sprite using the obstacle data
 		sprite.setPosition(obstacle.m_position);
-		sprite.rotate(obstacle.m_rotation);
+		sprite.setRotation(obstacle.m_rotation);
 		m_sprites.push_back(sprite);
 	}
+
+	generateWalls();
 }
 
 ////////////////////////////////////////////////////////////
@@ -135,6 +137,22 @@ void Game::processGameEvents(sf::Event& event)
 		default:
 			break;
 		}
+	}
+}
+
+void Game::generateWalls()
+{
+	sf::IntRect wallRect(2, 129, 33, 23);
+	// Create the Walls 
+	for (ObstacleData const& obstacle : m_level.m_obstacles)
+	{
+		sf::Sprite sprite;
+		sprite.setTexture(m_spriteSheetTexture);
+		sprite.setTextureRect(wallRect);
+		sprite.setOrigin(wallRect.width / 2.0, wallRect.height / 2.0);
+		sprite.setPosition(obstacle.m_position);
+		sprite.setRotation(obstacle.m_rotation);
+		m_wallSprites.push_back(sprite);
 	}
 }
 

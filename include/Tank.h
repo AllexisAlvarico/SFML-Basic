@@ -10,7 +10,7 @@
 class Tank
 {
 public:	
-	Tank(sf::Texture const & texture, sf::Vector2f const & pos);
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites)
 	void update(double dt);
 	void render(sf::RenderWindow & window);
 	void increaseSpeed();

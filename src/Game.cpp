@@ -25,7 +25,7 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_spriteSheetTexture,m_level.m_tank.m_position)
+	m_tank(m_spriteSheetTexture, m_sprites)
 {
 	//m_window.setVerticalSyncEnabled(true);
 

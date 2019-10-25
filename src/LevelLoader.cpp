@@ -98,5 +98,3 @@ void LevelLoader::load(int nr, LevelData& level)
 		throw std::exception(message.c_str());
 	}
 }
-
-

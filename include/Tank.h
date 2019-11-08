@@ -21,6 +21,8 @@ public:
 	void increaseTurretRotation();
 	void decreaseTurretRotation();
 	void centreTurret();
+	void fire(double dt);
+	void bulletCollision();
 	
 	/// <summary>
 	/// @brief Checks for collisions between the tank and the walls.
@@ -46,18 +48,23 @@ private:
 	void initSprites(sf::Vector2f const & pos);
 	sf::Sprite m_tankBase;
 	sf::Sprite m_turret;
+	sf::Sprite m_bullet;
+	sf::Texture m_bulletTexture;
 	sf::Texture const & m_texture;
 	double m_speed{ 0.0 };
+	double m_fireSpeed{ 1000 };
 	double m_rotation{ 0.0 };
 	double m_turretRotation{ 0.0 };
 	double M_MAX{ 100.0 };
 	double M_MIN{ -100.0 };
 	bool m_central;
 	bool m_enableRotation{ true };
+	bool m_fired{ false };
 	sf::Vector2f m_previousPosition{ 0.0f,0.0f };
 	double m_previousSpeed{ 0.0 };
 	double m_previousRotation{ 0.0 };
 	double m_previousTurretRotation{ 0.0 };
 	std::vector<sf::Sprite>& m_wallSprites;
+	sf::Vector2f dirVec;
 		
 };

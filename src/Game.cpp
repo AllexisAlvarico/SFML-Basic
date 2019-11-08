@@ -66,6 +66,8 @@ Game::Game()
 		throw std::exception(errorMsg.c_str());
 	}
 
+	
+
 
 	// Extract the wall image from the spritesheet.
 	sf::Sprite sprite;

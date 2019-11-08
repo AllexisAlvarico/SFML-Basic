@@ -10,6 +10,7 @@ Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites)
 
 void Tank::update(double dt)
 {	
+
 	handleKeyInput();
 	m_previousPosition = m_tankBase.getPosition();
 	m_tankBase.setPosition(m_tankBase.getPosition().x + cos(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt/ 1000), m_tankBase.getPosition().y + sin(m_rotation * MathUtility::DEG_TO_RAD) * m_speed * (dt / 1000));
@@ -19,19 +20,23 @@ void Tank::update(double dt)
 	m_speed *= 0.99;
 	m_speed = std::clamp(m_speed, M_MIN, M_MAX);
 
+	 fire(dt);
+
 
 	if (checkWallCollision())
 	{
 		deflect();
 	}
-
+	bulletCollision();
 
 }
 
 void Tank::render(sf::RenderWindow & window) 
 {
 	window.draw(m_tankBase);
+	window.draw(m_bullet);
 	window.draw(m_turret);
+
 }
 
 void Tank::increaseSpeed()
@@ -97,6 +102,13 @@ void Tank::handleKeyInput()
 	{
 		decreaseTurretRotation();
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		m_fired = true;
+		dirVec = sf::Vector2f(1, 0);
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 	{
 		m_central = true;
@@ -148,6 +160,34 @@ void Tank::centreTurret()
 	
 }
 
+void Tank::fire(double dt)
+{
+
+	if (m_fired  && dirVec != sf::Vector2f(-1,-1))
+	{
+		m_bullet.setPosition(m_tankBase.getPosition());
+		m_bullet.setRotation(m_turret.getRotation());
+		dirVec = thor::rotatedVector(sf::Vector2f(1, 0), m_turret.getRotation());
+		dirVec.x* m_fireSpeed * dt / 1000;
+		dirVec.y* m_fireSpeed* dt / 1000;
+		m_fired = false;
+	}
+
+
+}
+
+void Tank::bulletCollision()
+{
+	for (sf::Sprite const& sprite : m_wallSprites)
+	{
+		if (CollisionDetector::collision(m_bullet, sprite))
+		{
+			m_bullet.setPosition(-1000, -1000);
+			dirVec = sf::Vector2f(-1, -1);
+		}
+	}
+}
+
 
 bool Tank::checkWallCollision()
 {
@@ -157,11 +197,11 @@ bool Tank::checkWallCollision()
 		if (CollisionDetector::collision(m_turret, sprite) ||
 			CollisionDetector::collision(m_tankBase, sprite))
 		{
-			std::cout << "I have collided with a wall\n";
+		/*	std::cout << "I have collided with a wall\n";*/
 			return true;
 		}
 	}
-	std::cout << "I have not collided with a wall\n";
+	//std::cout << "I have not collided with a wall\n";
 	return false;
 }
 void Tank::deflect()
@@ -225,5 +265,16 @@ void Tank::initSprites(sf::Vector2f const & pos)
 	m_turret.setTextureRect(turretRect);
 	m_turret.setOrigin(turretRect.width / 3.0, turretRect.height / 2.0);
 	m_turret.setPosition(pos);
+
+	if (!m_bulletTexture.loadFromFile("resources\\images\\Bullet.png"))
+	{
+		std::string errorMsg("Error loading texture");
+		throw std::exception(errorMsg.c_str());
+	}
+
+
+	m_bullet.setTexture(m_bulletTexture);
+	m_bullet.setPosition(-1000,-1000);
+
 
 }

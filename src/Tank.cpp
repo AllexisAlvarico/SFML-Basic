@@ -20,13 +20,14 @@ void Tank::update(double dt)
 	m_speed *= 0.99;
 	m_speed = std::clamp(m_speed, M_MIN, M_MAX);
 
-	 fire(dt);
 
+	fire(dt);
 
 	if (checkWallCollision())
 	{
 		deflect();
 	}
+
 	bulletCollision();
 
 }
@@ -105,9 +106,13 @@ void Tank::handleKeyInput()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		m_fired = true;
-		dirVec = sf::Vector2f(1, 0);
+		if (m_canFire)
+		{
+			m_fired = true;
+			dirVec = sf::Vector2f(1, 0);
+		}
 	}
+
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 	{
@@ -153,7 +158,6 @@ void Tank::centreTurret()
 	}
 	else
 	{
-		//m_turretRotation += 0;
 		m_central = false;
 	}
 
@@ -162,17 +166,17 @@ void Tank::centreTurret()
 
 void Tank::fire(double dt)
 {
-
-	if (m_fired  && dirVec != sf::Vector2f(-1,-1))
+	if (m_fired && dirVec != sf::Vector2f(-1,-1))
 	{
 		m_bullet.setPosition(m_tankBase.getPosition());
 		m_bullet.setRotation(m_turret.getRotation());
 		dirVec = thor::rotatedVector(sf::Vector2f(1, 0), m_turret.getRotation());
 		dirVec.x* m_fireSpeed * dt / 1000;
 		dirVec.y* m_fireSpeed* dt / 1000;
+		m_canFire = false;
 		m_fired = false;
 	}
-
+	m_bullet.move(dirVec);
 
 }
 
@@ -184,7 +188,14 @@ void Tank::bulletCollision()
 		{
 			m_bullet.setPosition(-1000, -1000);
 			dirVec = sf::Vector2f(-1, -1);
+			m_canFire = true;
 		}
+	}
+	if (m_bullet.getPosition().x > 1440 || m_bullet.getPosition().x < 0 || m_bullet.getPosition().y > 900 || m_bullet.getPosition().y < 0)
+	{
+		m_bullet.setPosition(-1000, -1000);
+		dirVec = sf::Vector2f(-1, -1);
+		m_canFire = true;
 	}
 }
 
@@ -204,6 +215,7 @@ bool Tank::checkWallCollision()
 	//std::cout << "I have not collided with a wall\n";
 	return false;
 }
+
 void Tank::deflect()
 {
 	// In case tank was rotating.

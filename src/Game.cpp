@@ -172,7 +172,7 @@ void Game::update(double dt)
 	m_timer = m_clock.getElapsedTime();
 	std::cout << m_timer.asSeconds() << std::endl;
 
-	m_text.setString("Timer: " + std::to_string(static_cast<int>(m_timer.asSeconds())));
+	m_text.setString("Timer: " + std::to_string(60 - static_cast<int>(m_timer.asSeconds())));
 	m_tank.update(dt);
 }
 

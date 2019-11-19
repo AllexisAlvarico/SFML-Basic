@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <string.h>
 #include "ScreenSize.h"
 #include "LevelLoader.h"
 #include "Tank.h"
@@ -84,6 +85,10 @@ protected:
 	sf::Texture m_bgTexture;
 	sf::Texture m_playerTexture;
 	std::vector<sf::Sprite> m_wallSprites;
+	sf::Font m_font;
+	sf::Text m_text;
+	sf::Time m_timer;
+	sf::Clock m_clock;
 	float m_turn = 360;
 
 	LevelData m_level;

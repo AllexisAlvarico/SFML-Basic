@@ -44,6 +44,11 @@ Game::Game()
 		throw e;
 	}
 
+
+	if (!m_font.loadFromFile("resources\\Fonts\\ariblk.ttf"))
+	{
+		//error
+	}
 	
 	if (!m_playerTexture.loadFromFile("resources\\images\\E-100.png"))
 	{
@@ -67,6 +72,9 @@ Game::Game()
 	}
 
 	
+	m_text.setFont(m_font);
+	m_text.setCharacterSize(32);
+	m_text.setPosition(150, 50);
 
 
 	// Extract the wall image from the spritesheet.
@@ -160,8 +168,11 @@ void Game::generateWalls()
 
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
-{
+{ 
+	m_timer = m_clock.getElapsedTime();
+	std::cout << m_timer.asSeconds() << std::endl;
 
+	m_text.setString("Timer: " + std::to_string(static_cast<int>(m_timer.asSeconds())));
 	m_tank.update(dt);
 }
 
@@ -179,6 +190,7 @@ void Game::render()
 	}
 	//m_window.draw(m_player);
 	m_tank.render(m_window);
+	m_window.draw(m_text);
 	m_window.display();
 }
 

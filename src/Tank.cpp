@@ -269,7 +269,8 @@ void Tank::initSprites(sf::Vector2f const & pos)
 	sf::IntRect baseRect(2, 43, 79, 43);
 	m_tankBase.setTextureRect(baseRect);
 	m_tankBase.setOrigin(baseRect.width / 2.0, baseRect.height / 2.0);
-	m_tankBase.setPosition(pos);
+	//m_tankBase.setPosition(pos);
+	setPosition(pos);
 
 	// Initialise the turret
 	m_turret.setTexture(m_texture);
@@ -288,5 +289,10 @@ void Tank::initSprites(sf::Vector2f const & pos)
 	m_bullet.setTexture(m_bulletTexture);
 	m_bullet.setPosition(-1000,-1000);
 
+}
 
+void Tank::setPosition(sf::Vector2f const & pos)
+{
+	m_tankBase.setPosition(pos);
+	m_turret.setPosition(pos);
 }

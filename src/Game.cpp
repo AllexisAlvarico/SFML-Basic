@@ -18,6 +18,7 @@
 
 #include "Game.h"
 #include <iostream>
+#include <ctime>
 
 // Updates per milliseconds
 static double const MS_PER_UPDATE = 10.0;
@@ -56,7 +57,7 @@ Game::Game()
 	}
 	//m_player.setTexture(m_playerTexture);
 	//m_player.setOrigin(103,48);
-	m_player.setPosition(m_level.m_tank.m_position);
+	//m_player.setPosition(m_level.m_tank.m_position);
 
 	if (!m_bgTexture.loadFromFile("resources\\images\\Background.jpg"))
 	{
@@ -69,6 +70,30 @@ Game::Game()
 
 		std::string errorMsg("Error loading texture");
 		throw std::exception(errorMsg.c_str());
+	}
+
+	srand(time(NULL));
+
+	int m_position= rand() % 4 + 1;
+
+
+
+	if (m_position == 1)
+	{
+		m_tank.setPosition(sf::Vector2f(100, 100));
+	}
+	else if (m_position == 2)
+	{
+		m_tank.setPosition(sf::Vector2f(100,800));
+	}
+	else if (m_position == 3)
+	{
+		m_tank.setPosition(sf::Vector2f(1340,100));
+	}
+	else
+	{
+		m_tank.setPosition(sf::Vector2f(1340,800));
+
 	}
 
 	

@@ -44,6 +44,7 @@ public:
 	/// </summary>
 	void deflect();
 	void adjustRotation();
+	void setPosition(sf::Vector2f const& pos);
 
 private:
 	void initSprites(sf::Vector2f const & pos);

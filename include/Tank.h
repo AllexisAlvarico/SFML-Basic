@@ -10,7 +10,7 @@
 class Tank
 {
 public:	
-	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites);
+	Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites,std::vector<sf::Sprite>& targetSprites);
 	void update(double dt);
 	void render(sf::RenderWindow & window);
 	void increaseSpeed();
@@ -69,6 +69,7 @@ private:
 	double m_previousRotation{ 0.0 };
 	double m_previousTurretRotation{ 0.0 };
 	std::vector<sf::Sprite>& m_wallSprites;
+	std::vector<sf::Sprite>& m_targetSprites;
 	sf::Vector2f dirVec{ -1,-1 };
 		
 };

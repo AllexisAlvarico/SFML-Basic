@@ -2,8 +2,8 @@
 #include "CollisionDetector.h"
 #include <iostream>
 
-Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites)
-: m_texture(texture), m_wallSprites(wallSprites)
+Tank::Tank(sf::Texture const& texture, std::vector<sf::Sprite>& wallSprites, std::vector<sf::Sprite>& targetSprites)
+: m_texture(texture), m_wallSprites(wallSprites), m_targetSprites(targetSprites)
 {
 	initSprites(m_tankBase.getPosition());
 }
@@ -191,6 +191,19 @@ void Tank::bulletCollision()
 			m_canFire = true;
 		}
 	}
+
+	for (sf::Sprite const& sprite : m_targetSprites)
+	{
+		if (CollisionDetector::collision(m_bullet, sprite))
+		{
+			m_bullet.setPosition(-1000, -1000);
+			dirVec = sf::Vector2f(-1, -1);
+			m_canFire = true;
+		}
+
+
+	}
+
 	if (m_bullet.getPosition().x > 1440 || m_bullet.getPosition().x < 0 || m_bullet.getPosition().y > 900 || m_bullet.getPosition().y < 0)
 	{
 		m_bullet.setPosition(-1000, -1000);

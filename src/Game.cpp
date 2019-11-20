@@ -26,7 +26,7 @@ static double const MS_PER_UPDATE = 10.0;
 ////////////////////////////////////////////////////////////
 Game::Game()
 	: m_window(sf::VideoMode(ScreenSize::s_height, ScreenSize::s_width, 32), "SFML Playground", sf::Style::Default),
-	m_tank(m_spriteSheetTexture, m_sprites)
+	m_tank(m_spriteSheetTexture, m_sprites, m_targetSprites)
 {
 	//m_window.setVerticalSyncEnabled(true);
 
@@ -208,7 +208,6 @@ void Game::generateWalls()
 
 void Game::generateTarget()
 {
-	
 	for (TargetData const& target : m_level.m_target)
 	{
 		sf::Sprite sprite;
@@ -216,8 +215,6 @@ void Game::generateTarget()
 		sprite.setPosition(target.m_position);
 		m_wallSprites.push_back(sprite);
 	}
-
-
 
 }
 

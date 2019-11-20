@@ -84,3 +84,29 @@ obstacles:
    - type: wall
      position: {x: 1032, y: 632}
      rotation: 0
+targets: 
+   - type: target
+     position: {x: 100, y: 660}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 200, y: 500}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 300, y: 800}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 200, y: 700}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 400, y: 200}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6

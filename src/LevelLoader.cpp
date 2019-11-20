@@ -18,6 +18,16 @@ void operator >> (const YAML::Node& obstacleNode, ObstacleData& obstacle)
 	obstacle.m_rotation = obstacleNode["rotation"].as<double>();
 }
 
+void operator >> (const YAML::Node& targetNode, TargetData& target)
+{
+	target.m_type = targetNode["type"].as<std::string>();
+	target.m_position.x = targetNode["position"]["x"].as<float>();
+	target.m_position.y = targetNode["position"]["y"].as<float>();
+	target.m_offset = targetNode["offset"].as<int>();
+	target.m_aliveTimer = targetNode["aliveTimer"].as<int>();
+	target.m_respawn = targetNode["respawn"].as<int>();
+}
+
 /// <summary>
 /// @brief Extracts the filename for the game background texture.
 /// 
@@ -64,6 +74,14 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
 		ObstacleData obstacle;
 		obstaclesNode[i] >> obstacle;
 		level.m_obstacles.push_back(obstacle);
+	}
+
+	const YAML::Node& targetNode = levelNode["targets"].as<YAML::Node>();
+	for (unsigned i = 0; i < targetNode.size(); ++i)
+	{
+		TargetData m_target;
+		targetNode[i] >> m_target;
+		level.m_target.push_back(m_target);
 	}
 }
 

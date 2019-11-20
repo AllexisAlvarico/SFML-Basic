@@ -103,20 +103,35 @@ Game::Game()
 
 
 	// Extract the wall image from the spritesheet.
-	sf::Sprite sprite;
+	sf::Sprite spriteObstacle;
 	sf::IntRect wallRect(2, 129, 33, 23);
-	sprite.setTexture(m_spriteSheetTexture);
-	sprite.setTextureRect(wallRect);
+	spriteObstacle.setTexture(m_spriteSheetTexture);
+	spriteObstacle.setTextureRect(wallRect);
 	// Loop through each Obstacle instance - recall that Obstacles are structs
 	for (auto& obstacle : m_level.m_obstacles)
 	{
 		// Position the wall sprite using the obstacle data
-		sprite.setPosition(obstacle.m_position);
-		sprite.setRotation(obstacle.m_rotation);
-		m_sprites.push_back(sprite);
+		spriteObstacle.setPosition(obstacle.m_position);
+		spriteObstacle.setRotation(obstacle.m_rotation);
+		m_sprites.push_back(spriteObstacle);
 	}
 
+	sf::Sprite m_spriteTarget;
+
+	if (!m_targetTexture.loadFromFile("resources\\images\\target.png"))
+	{
+		std::string errorMsg("Error loading texture");
+		throw std::exception(errorMsg.c_str());
+	}
+	m_spriteTarget.setTexture(m_targetTexture);
+
+	for (auto& target : m_level.m_target)
+	{
+		m_spriteTarget.setPosition(target.m_position);
+		m_targetSprites.push_back(m_spriteTarget);
+	}
 	generateWalls();
+	generateTarget();
 }
 
 ////////////////////////////////////////////////////////////
@@ -191,13 +206,31 @@ void Game::generateWalls()
 	}
 }
 
+void Game::generateTarget()
+{
+	
+	for (TargetData const& target : m_level.m_target)
+	{
+		sf::Sprite sprite;
+		sprite.setTexture(m_targetTexture);
+		sprite.setPosition(target.m_position);
+		m_wallSprites.push_back(sprite);
+	}
+
+
+
+}
+
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 { 
 	m_timer = m_clock.getElapsedTime();
 	std::cout << m_timer.asSeconds() << std::endl;
-
-	m_text.setString("Timer: " + std::to_string(60 - static_cast<int>(m_timer.asSeconds())));
+	if (static_cast<int>(m_timer.asSeconds() >= 60))
+	{
+		m_clock.restart();
+	}
+	m_text.setString("Timer: " + (std::to_string (60 - static_cast<int>(m_timer.asSeconds()))));
 	m_tank.update(dt);
 }
 
@@ -212,6 +245,12 @@ void Game::render()
 	{
 		m_window.draw(m_sprites.at(i));
 		i++;
+	}
+	int j = 0;
+	for (auto& target : m_level.m_target)
+	{
+		m_window.draw(m_targetSprites.at(j));
+		j++;
 	}
 	//m_window.draw(m_player);
 	m_tank.render(m_window);

@@ -78,6 +78,9 @@ protected:
 	/// </summary>
 	void generateWalls();
 
+	void generateTarget();
+
+
 	// main window
 	sf::RenderWindow m_window;
 	sf::Sprite m_player;
@@ -90,10 +93,12 @@ protected:
 	sf::Time m_timer;
 	sf::Clock m_clock;
 	float m_turn = 360;
-
 	LevelData m_level;
 	Tank m_tank;
 
+
 	std::vector<sf::Sprite> m_sprites;
+	std::vector<sf::Sprite> m_targetSprites;
 	sf::Texture m_spriteSheetTexture;
+	sf::Texture m_targetTexture;
 };

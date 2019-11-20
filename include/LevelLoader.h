@@ -36,6 +36,17 @@ struct TankData
 	sf::Vector2f m_position;
 };
 
+struct TargetData
+{
+	std::string m_type;
+	sf::Vector2f m_position;
+	int m_aliveTimer;
+	int m_offset;
+	int m_respawn;
+};
+
+
+
 /// <summary>
 /// @brief A struct representing all the Level Data.
 /// 
@@ -46,7 +57,9 @@ struct LevelData
 	BackgroundData m_background;
 	TankData m_tank;
 	std::vector<ObstacleData> m_obstacles;
+	std::vector<TargetData> m_target;
 };
+
 
 /// <summary>
 /// @brief A class to manage level loading.

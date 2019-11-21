@@ -192,13 +192,14 @@ void Tank::bulletCollision()
 		}
 	}
 
-	for (sf::Sprite const& sprite : m_targetSprites)
+	for (sf::Sprite &sprite : m_targetSprites)
 	{
 		if (CollisionDetector::collision(m_bullet, sprite))
 		{
 			m_bullet.setPosition(-1000, -1000);
 			dirVec = sf::Vector2f(-1, -1);
 			m_canFire = true;
+			sprite.setPosition(-1000,-1000);
 		}
 
 

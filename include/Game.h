@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <Thor/Time.hpp>
 #include <string.h>
 #include "ScreenSize.h"
 #include "LevelLoader.h"
@@ -95,6 +96,10 @@ protected:
 	float m_turn = 360;
 	LevelData m_level;
 	Tank m_tank;
+	thor::StopWatch m_stopWatch;
+	int m_targetIndex{ 0 };
+	int m_offsetRandom{ 0 };
+	int m_alphaColour{ 255 };
 
 
 	std::vector<sf::Sprite> m_sprites;

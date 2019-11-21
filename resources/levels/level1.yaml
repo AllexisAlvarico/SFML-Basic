@@ -86,27 +86,47 @@ obstacles:
      rotation: 0
 targets: 
    - type: target
-     position: {x: 100, y: 660}
+     position: {x: 100, y: 100}
      offset: 20
      aliveTimer: 3
      respawn: 6
    - type: target
-     position: {x: 200, y: 500}
+     position: {x: 1400, y: 800}
      offset: 20
      aliveTimer: 3
      respawn: 6
    - type: target
-     position: {x: 300, y: 800}
+     position: {x: 1200, y: 300}
      offset: 20
      aliveTimer: 3
      respawn: 6
    - type: target
-     position: {x: 200, y: 700}
+     position: {x: 562, y: 300}
      offset: 20
      aliveTimer: 3
      respawn: 6
    - type: target
-     position: {x: 400, y: 200}
+     position: {x: 455, y: 165}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 1000, y: 233}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 600, y: 500}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 700, y: 600}
+     offset: 20
+     aliveTimer: 3
+     respawn: 6
+   - type: target
+     position: {x: 1230, y: 402}
      offset: 20
      aliveTimer: 3
      respawn: 6

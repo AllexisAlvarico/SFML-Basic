@@ -68,6 +68,7 @@ private:
 	double m_previousSpeed{ 0.0 };
 	double m_previousRotation{ 0.0 };
 	double m_previousTurretRotation{ 0.0 };
+	//const sf::Vector2f m_targetPosition{ -1000,-1000 };
 	std::vector<sf::Sprite>& m_wallSprites;
 	std::vector<sf::Sprite>& m_targetSprites;
 	sf::Vector2f dirVec{ -1,-1 };

@@ -96,6 +96,10 @@ Game::Game()
 
 	}
 
+	thor::StopWatch::StopWatch();
+
+	m_stopWatch.start();
+
 	
 	m_text.setFont(m_font);
 	m_text.setCharacterSize(32);
@@ -212,7 +216,17 @@ void Game::generateTarget()
 	{
 		sf::Sprite sprite;
 		sprite.setTexture(m_targetTexture);
-		sprite.setPosition(target.m_position);
+		m_offsetRandom = rand() % target.m_offset + 1;
+		short sign = rand() % 2;
+		if (0 == sign)
+		{
+			m_offsetRandom *= 1;
+		}
+		else
+		{
+			m_offsetRandom *= -1;
+		}
+		sprite.setPosition(target.m_position.x + m_offsetRandom,target.m_position.y + m_offsetRandom);
 		m_wallSprites.push_back(sprite);
 	}
 
@@ -221,13 +235,35 @@ void Game::generateTarget()
 ////////////////////////////////////////////////////////////
 void Game::update(double dt)
 { 
+
+	//start a target timer for 3 seconds
+	// If timer reaches 3 seonds
+	// increment the target index by 1
+
+	if(m_stopWatch.getElapsedTime().asSeconds() > 3)
+	{
+		m_alphaColour = 255;
+		m_targetIndex++;
+		m_targetIndex = (m_targetIndex + 1) % m_targetSprites.size();
+		m_stopWatch.reset();
+		m_stopWatch.start();
+	}
+	else
+	{
+		m_alphaColour--;
+		m_targetSprites[m_targetIndex].setColor(sf::Color(sf::Color(255, 255, 255, m_alphaColour)));
+	}
+
+
 	m_timer = m_clock.getElapsedTime();
 	std::cout << m_timer.asSeconds() << std::endl;
 	if (static_cast<int>(m_timer.asSeconds() >= 60))
 	{
 		m_clock.restart();
 	}
-	m_text.setString("Timer: " + (std::to_string (60 - static_cast<int>(m_timer.asSeconds()))));
+
+	m_text.setString("Timer: " + (std::to_string(60 - static_cast<int>(m_timer.asSeconds()))));
+
 	m_tank.update(dt);
 }
 
@@ -243,12 +279,14 @@ void Game::render()
 		m_window.draw(m_sprites.at(i));
 		i++;
 	}
-	int j = 0;
-	for (auto& target : m_level.m_target)
-	{
-		m_window.draw(m_targetSprites.at(j));
-		j++;
-	}
+
+	// no loop here.
+	// draw the target at the target index
+	//m_window.draw(m_target.at(m_targetIndex));
+
+
+	m_window.draw(m_targetSprites.at(m_targetIndex));
+		
 	//m_window.draw(m_player);
 	m_tank.render(m_window);
 	m_window.draw(m_text);
